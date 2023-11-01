@@ -1,0 +1,51 @@
+# data_idを外部から入力
+data_id = int(input("data_idを入力してください: "))
+
+def bitxor(a, b):
+    return a ^ b
+
+result = bitxor(data_id, 377544828)
+binary_result = bin(result)[2:].zfill(32)  # 左側に0を追加して32桁にする
+
+F = binary_result[:12]
+C = binary_result[12:]
+
+B = bin((data_id - 31) % 64)[2:].zfill(6)  # 2進数に変換し、6桁にする
+
+combined_string = "1" + "0" * 3 + B + C + "1" + "1" + F
+
+decimal_base_value = int(combined_string, 2)  # 10進数に変換
+
+import numpy as np
+
+thirty_base_value = np.base_repr(decimal_base_value, 30)
+
+reversed_thirty_base_value = ''.join(reversed(str(thirty_base_value)))  # 逆順に並び替える
+
+reversed_lowercase_value = reversed_thirty_base_value.lower()  # 小文字に変換
+
+converted_value = (
+    reversed_lowercase_value
+    .replace('a', 'B')
+    .replace('b', 'C')
+    .replace('c', 'D')
+    .replace('d', 'F')
+    .replace('e', 'G')
+    .replace('f', 'H')
+    .replace('g', 'J')
+    .replace('h', 'K')
+    .replace('i', 'L')
+    .replace('j', 'M')
+    .replace('k', 'N')
+    .replace('l', 'P')
+    .replace('m', 'Q')
+    .replace('n', 'R')
+    .replace('o', 'S')
+    .replace('p', 'T')
+    .replace('q', 'V')
+    .replace('r', 'W')
+    .replace('s', 'X')
+    .replace('t', 'Y')
+)
+
+print(converted_value)
